@@ -9,7 +9,7 @@ on:
         type: boolean
       custom_message:
         description: 'Enter a custom message'
-        required: false
+        required: true
         type: string
 
 jobs:
@@ -17,8 +17,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "Exploring Workflow Dispatch Trigger"
+
   job2:
+    if: github.event.inputs.run-job == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Printing Custom Message
-        run: echo "${{ inputs.custom_message }}"
+        run: echo ${{ inputs.custom_message }}
+      - name: Running Specific Job
+        run: echo "Running Specific Job"
